@@ -19,5 +19,8 @@
   "engines": {
     "node": ">=10"
   },
-  "homepage": "https://github.com/csulok/jira-uploader#readme"
+  "homepage": "https://github.com/csulok/jira-uploader#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
 }
