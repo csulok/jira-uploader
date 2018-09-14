@@ -6,7 +6,7 @@ const app = express();
 
 
 const corsOptions = {
-  origin: true,
+  origin: "*",
   methods: ["GET", "HEAD", "POST", "OPTIONS"]
 };
 app.options("/api", cors(corsOptions));
