@@ -6,7 +6,7 @@ const app = express();
 
 
 const corsOptions = {
-  origin: "https://hypo-drawing.chemaxon.com",
+  origin: ["https://hypo-drawing.chemaxon.com", "http://localhost", "*"],
   methods: ["GET", "HEAD", "POST", "OPTIONS"]
 };
 app.options("/api", cors(corsOptions));
