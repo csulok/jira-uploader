@@ -22,13 +22,12 @@ app.post("/api", bodyParser.json(), async (req, res, next) => {
   const issueId = req.body.ideaId;
   const dataUrl = req.body.dataUrl;
   const fileName = req.body.fileName;
-  console.log(issueId, fileName, "dataUrl length:", dataUrl.length);
+  console.log("uploading", issueId, fileName, "dataUrl length:", dataUrl.length);
   
   if (!issueId || !dataUrl || !fileName) {
     return next();
   }
-  console.log("using", process.env["JIRA_USERNAME"], process.env["JIRA_PASSWORD"]);
-  
+    
   try {
     const results = await request.post({
       url: `https://hypo.chemaxon.com/rest/api/2/issue/${issueId}/attachments`,
@@ -40,11 +39,7 @@ app.post("/api", bodyParser.json(), async (req, res, next) => {
         "X-Atlassian-Token": "no-check"
       },
       formData: {
-        value: new Buffer(dataUrl.split(",")[1], 'base64'),
-        options: {
-          filename: fileName,
-          contentType: "image/png"
-        } 
+        file: new Buffer(dataUrl.split(",")[1], 'base64')
       }
     });
     
