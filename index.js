@@ -39,14 +39,13 @@ app.post("/api", bodyParser.json(), async (req, res, next) => {
       headers: {
         "X-Atlassian-Token": "no-check"
       },
-      form: {
+      formData: {
         value: new Buffer(dataUrl.split(",")[1], 'base64'),
         options: {
           filename: fileName,
           contentType: "image/png"
         } 
-      },
-      json: true
+      }
     });
     
     res.sendStatus(200);
