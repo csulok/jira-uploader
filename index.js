@@ -41,7 +41,11 @@ app.post("/api", bodyParser.json(), async (req, res, next) => {
       file: new Buffer(dataUrl.split(",")[1], 'base64')
     }
   }, (err, res, body) => {
-    console.log(err, res, body);
+    if (err || !res || !(/^2/.test("" + res.statusCode))) {
+      console.log("Couldn't upload the file", res.statusCode, err);
+    } else {
+      console.log("Upload success");
+    }
   });
 
 });
