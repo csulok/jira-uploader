@@ -24,7 +24,7 @@ app.post("/api", bodyParser.json(), async (req, res, next) => {
   const fileName = req.body.fileName;
   console.log(issueId, fileName, "dataUrl length:", dataUrl.length);
   
-  if (!ideaId || !dataUrl || !fileName) {
+  if (!issueId || !dataUrl || !fileName) {
     return next();
   }
   console.log("using", process.env["JIRA_USERNAME"], process.env["JIRA_PASSWORD"]);
