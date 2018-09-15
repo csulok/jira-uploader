@@ -1,7 +1,7 @@
 const express = require("express")
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const request =  require("request-promise");
+const request =  require("request");
 
 const app = express();
 
@@ -28,26 +28,20 @@ app.post("/api", bodyParser.json(), async (req, res, next) => {
     return next();
   }
     
-  try {
-    const results = await request.post({
-      url: `https://hypo.chemaxon.com/rest/api/2/issue/${issueId}/attachments`,
-      auth: {
-        username: process.env["JIRA_USERNAME"],
-        password: process.env["JIRA_PASSWORD"]
-      },
-      headers: {
-        "X-Atlassian-Token": "no-check"
-      },
-      formData: {
-        file: new Buffer(dataUrl.split(",")[1], 'base64')
-      }
-    });
-    
-    res.sendStatus(200);
-    return;
-  } catch (err) {
-    console.log("An error occured", err.stack);
-    res.sendStatus(500);
-  }
+  const results = await request.post({
+    url: `https://hypo.chemaxon.com/rest/api/2/issue/${issueId}/attachments`,
+    auth: {
+      username: process.env["JIRA_USERNAME"],
+      password: process.env["JIRA_PASSWORD"]
+    },
+    headers: {
+      "X-Atlassian-Token": "no-check"
+    },
+    formData: {
+      file: new Buffer(dataUrl.split(",")[1], 'base64')
+    }
+  }, (err, res, body) => {
+    console.log(err, res, body);
+  });
 
 });
