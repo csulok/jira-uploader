@@ -45,7 +45,8 @@ app.post("/api", bodyParser.json(), async (req, res, next) => {
           filename: fileName,
           contentType: "image/png"
         } 
-      }
+      },
+      json: true
     });
     
     res.sendStatus(200);
