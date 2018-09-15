@@ -27,6 +27,9 @@ app.post("/api", bodyParser.json(), async (req, res, next) => {
   if (!issueId || !dataUrl || !fileName) {
     return next();
   }
+  
+  const form = request.form();
+  form.append("file", new Buffer(dataUrl.split(",")[1], 'base64'), {filename: fileName});
     
   const results = await request.post({
     url: `https://hypo.chemaxon.com/rest/api/2/issue/${issueId}/attachments`,
@@ -35,14 +38,14 @@ app.post("/api", bodyParser.json(), async (req, res, next) => {
       password: process.env["JIRA_PASSWORD"]
     },
     headers: {
-      "X-Atlassian-Token": "no-check"
+      "X-Atlassian-Token": "no-check",
+      "Accept": "application/json"
     },
-    formData: {
-      file: new Buffer(dataUrl.split(",")[1], 'base64')
-    }
+    body: form
   }, (err, res, body) => {
     if (err || !res || !(/^2/.test("" + res.statusCode))) {
       console.log("Couldn't upload the file", res.statusCode, err, body);
+      res.sendStatus(res.statusCode || 500);
     } else {
       console.log("Upload success");
     }
