@@ -49,8 +49,9 @@ app.post("/api", bodyParser.json(), async (req, res, next) => {
     });
     
     res.sendStatus(200);
+    return;
   } catch (err) {
-    console.log(err);
+    console.log("An error occured", err.stack);
     res.sendStatus(500);
   }
 
