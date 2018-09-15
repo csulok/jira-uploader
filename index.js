@@ -42,7 +42,7 @@ app.post("/api", bodyParser.json(), async (req, res, next) => {
     }
   }, (err, res, body) => {
     if (err || !res || !(/^2/.test("" + res.statusCode))) {
-      console.log("Couldn't upload the file", res.statusCode, err);
+      console.log("Couldn't upload the file", res.statusCode, err, body);
     } else {
       console.log("Upload success");
     }
