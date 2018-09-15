@@ -2,7 +2,6 @@ const express = require("express")
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const request =  require("request");
-
 const app = express();
 
 
@@ -10,6 +9,7 @@ const corsOptions = {
   origin: ["https://hypo-drawing.chemaxon.com"],
   methods: ["GET", "HEAD", "POST", "OPTIONS"]
 };
+
 app.options("/api", cors(corsOptions));
 app.post("/api", cors(corsOptions));
 
@@ -17,18 +17,18 @@ app.post("/api", cors(corsOptions));
 app.get("/", (req, res) => res.send("Available endpoints: POST /api"));
 app.get("/status", (req, res) => res.json({ status: "OK"}));
 
+
 app.post("/api", bodyParser.json(), async (req, res, next) => {
   const issueId = req.body.ideaId;
   const dataUrl = req.body.dataUrl;
   const fileName = req.body.fileName;
-  console.log("uploading", issueId, fileName, "dataUrl length:", dataUrl.length);
+  console.log("Uploading", issueId, fileName, "dataUrl length:", dataUrl.length);
   
   if (!issueId || !dataUrl || !fileName) {
     return next();
   }
   
   
-    
   const r = request.post({
     url: `https://hypo.chemaxon.com/rest/api/2/issue/${issueId}/attachments`,
     auth: {
@@ -45,6 +45,7 @@ app.post("/api", bodyParser.json(), async (req, res, next) => {
       res.sendStatus(res.statusCode || 500);
     } else {
       console.log("Upload success for", issueId, fileName);
+      res.sendStatus(200);
     }
   });
   
