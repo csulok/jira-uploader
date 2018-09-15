@@ -39,9 +39,9 @@ app.post("/api", bodyParser.json(), async (req, res, next) => {
       "X-Atlassian-Token": "no-check",
       "Accept": "application/json"
     }
-  }, (err, res, body) => {
-    if (err || !res || !(/^2/.test("" + res.statusCode))) {
-      console.log("Couldn't upload the file", res.statusCode, err, body);
+  }, (err, uploadRes, body) => {
+    if (err || !uploadRes || !(/^2/.test("" + uploadRes.statusCode))) {
+      console.log("Couldn't upload the file", uploadRes.statusCode, err, body);
       res.sendStatus(res.statusCode || 500);
     } else {
       console.log("Upload success for", issueId, fileName);
