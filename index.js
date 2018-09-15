@@ -18,7 +18,7 @@ app.listen(process.env.PORT, () => console.log("Example app listening on port 80
 app.get("/", (req, res) => res.send("Available endpoints: POST /api"));
 app.get("/status", (req, res) => res.json({ status: "OK"}));
 
-app.post("/api", bodyParser.json(), (req, res, next) => {
+app.post("/api", bodyParser.json(), async (req, res, next) => {
   const issueId = req.body.ideaId;
   const dataUrl = req.body.dataUrl;
   const fileName = req.body.fileName;
