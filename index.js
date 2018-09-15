@@ -28,10 +28,9 @@ app.post("/api", bodyParser.json(), async (req, res, next) => {
     return next();
   }
   
-  const form = request.form();
-  form.append("file", new Buffer(dataUrl.split(",")[1], 'base64'), {filename: fileName});
+  
     
-  const results = await request.post({
+  const r = request.post({
     url: `https://hypo.chemaxon.com/rest/api/2/issue/${issueId}/attachments`,
     auth: {
       username: process.env["JIRA_USERNAME"],
@@ -50,5 +49,10 @@ app.post("/api", bodyParser.json(), async (req, res, next) => {
       console.log("Upload success");
     }
   });
+  
+  const form = r.form();
+  form.append("file", new Buffer(dataUrl.split(",")[1], 'base64'), {filename: fileName});
 
 });
+
+console.log("Running");
