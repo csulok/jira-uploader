@@ -39,8 +39,7 @@ app.post("/api", bodyParser.json(), async (req, res, next) => {
     headers: {
       "X-Atlassian-Token": "no-check",
       "Accept": "application/json"
-    },
-    body: form
+    }
   }, (err, res, body) => {
     if (err || !res || !(/^2/.test("" + res.statusCode))) {
       console.log("Couldn't upload the file", res.statusCode, err, body);
