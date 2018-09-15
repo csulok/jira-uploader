@@ -13,7 +13,6 @@ const corsOptions = {
 app.options("/api", cors(corsOptions));
 app.post("/api", cors(corsOptions));
 
-app.listen(process.env.PORT, () => console.log("Example app listening on port 80!"))
 
 app.get("/", (req, res) => res.send("Available endpoints: POST /api"));
 app.get("/status", (req, res) => res.json({ status: "OK"}));
@@ -45,7 +44,7 @@ app.post("/api", bodyParser.json(), async (req, res, next) => {
       console.log("Couldn't upload the file", res.statusCode, err, body);
       res.sendStatus(res.statusCode || 500);
     } else {
-      console.log("Upload success");
+      console.log("Upload success for", issueId, fileName);
     }
   });
   
@@ -54,4 +53,4 @@ app.post("/api", bodyParser.json(), async (req, res, next) => {
 
 });
 
-console.log("Running");
+app.listen(process.env.PORT, () => console.log("JIRA Uploader listening on port 80!"));
